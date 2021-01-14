@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>FastANN WASM Demo</title>
+</head>
+
+<body>
+  <h4>Status</h4>
+  <div id="status-text"></div>
+  <script type="module">
+    import init, { run_demo } from './pkg/fastann_wasm.js';
+
+    const domStatusText = document.querySelector('#status-text');
+    const updateStatus = (status) => {
+      const p = document.createElement('p');
+      p.textContent = `${status} at ${performance.now()}`;
+      domStatusText.appendChild(p);
+    }
+
+    updateStatus('Started');
+
+    (async () => {
+      await init();
+      updateStatus('Initialized');
+
+      run_demo((result) => {
+        console.log(result);
+      });
+      updateStatus('Finished');
+    })();
+  </script>
+</body>
+
+</html>
